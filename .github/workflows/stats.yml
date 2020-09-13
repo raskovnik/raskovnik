@@ -1,0 +1,26 @@
+on:
+  schedule:
+    - cron: '0 */24 * * *' # every 24 hours
+  push:
+    branches:
+      - master
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Generate README.md
+      uses: st3v3nmw/profile-readme-stats@master
+      with:
+        token: ${{ secrets.USER_TOKEN }}
+    - name: Update README.md
+      run: |
+        if [[ "$(git status --porcelain)" != "" ]]; then
+        git config user.name readme-update-bot
+        git config user.email stephenmwangi085@gmail.com
+        git add .
+        git commit -m "Update README"
+        git push
+        fi
