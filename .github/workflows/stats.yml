@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 */24 * * *' # every 24 hours
+    - cron: '0 0 * * 3' # run weekly
   push:
     branches:
       - master
@@ -12,7 +12,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Generate README.md
-      uses: st3v3nmw/profile-readme-stats@master
+      uses: raskovnik/profile-readme-stats@master
       with:
         token: ${{ secrets.USER_TOKEN }}
     - name: Update README.md
